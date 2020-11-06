@@ -1,26 +1,26 @@
 #include "List.h"
 
-List::Node::Node() :prev(nullptr), next(nullptr), data(0)
+List::Node::Node() :prev(nullptr), next(nullptr), item(0)
 {
 }
 
-List::Node::Node(int value) : prev(nullptr), next(nullptr), data(value)
+List::Node::Node(const int item) : prev(nullptr), next(nullptr), item(item)
 {
 }
 
 int List::Front()
 {
-	return head->next->data;
+	return head->next->item;
 }
 
 int List::Back()
 {
-	return tail->prev->data;
+	return tail->prev->item;
 }
 
-void List::PushFront(const int newValue)
+void List::PushFront(const int item)
 {
-	Node* newNode = new Node(newValue);
+	Node* newNode = new Node(item);
 
 	// Connect head->next to new node.
 	newNode->next = head->next;
@@ -33,9 +33,9 @@ void List::PushFront(const int newValue)
 	size++;
 }
 
-void List::PushBack(const int newValue)
+void List::PushBack(const int item)
 {
-	Node* newNode = new Node(newValue);
+	Node* newNode = new Node(item);
 
 	// Connect tail->prev to new node.
 	tail->prev->next = newNode;
@@ -51,7 +51,7 @@ void List::PushBack(const int newValue)
 int List::PopFront()
 {
 	Node* front = head->next;
-	int retValue = front->data;
+	int retValue = front->item;
 
 	// Connect head to front->next.
 	head->next = front->next;
@@ -67,7 +67,7 @@ int List::PopFront()
 int List::PopBack()
 {
 	Node* back = tail->prev;
-	int retValue = back->data;
+	int retValue = back->item;
 
 	// Connect tail to back->prev.
 	back->prev->next = tail;
@@ -86,23 +86,23 @@ bool List::IsValid(const int index)
 	return index < size;
 }
 
-void List::Insert(const int index, const int newValue)
+void List::Insert(const int index, const int item)
 {
-	if (!IsValid((index - 1)))	// It is possible to insert node at nth index even size is n - 1.
+	if (!IsValid((index - 1)))	// It is possible to insert node at nth index even top is n - 1.
 	{
 		std::cout << "Invalid index." << std::endl;
 
 		return;
 	}
 
-	// Insert new data after curNode.
+	// Insert new item after curNode.
 	Node* curNode = head;
 	for (int i = 0; i < index; i++)
 	{
 		curNode = curNode->next;
 	}
 
-	Node* newNode = new Node(newValue);
+	Node* newNode = new Node(item);
 
 	// Connect curNode->next to newNode.
 	curNode->next->prev = newNode;
@@ -155,7 +155,7 @@ void List::Print()
 	{
 		for (int i = 0; i < size; i++)
 		{
-			std::cout << curNode->data << std::endl;
+			std::cout << curNode->item << std::endl;
 			curNode = curNode->next;
 		}
 	}

@@ -4,8 +4,6 @@ void main()
 {
 	List list;
 
-	list.Print();
-
 	std::cout << "Push back 3-2-1." << std::endl;
 	list.PushBack(3);
 	list.PushBack(2);

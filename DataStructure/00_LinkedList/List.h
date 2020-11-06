@@ -9,13 +9,13 @@ private:
 	class Node
 	{
 	public:
-		int data;
+		int item;
 
 		Node* prev;
 		Node* next;
 
 		Node();
-		Node(int value);
+		Node(const int item);
 	};
 
 	Node* head;
@@ -25,13 +25,13 @@ private:
 public:
 	inline int Front();
 	inline int Back();
-	void PushFront(const int newValue);
-	void PushBack(const int newValue);
+	void PushFront(const int item);
+	void PushBack(const int item);
 	int PopFront();
 	int PopBack();
 #if IS_LIST == 1
 	inline bool IsValid(const int index);
-	void Insert(const int index, const int newValue);
+	void Insert(const int index, const int item);
 	void Remove(const int index);
 #endif
 	inline int Size();
