@@ -39,6 +39,16 @@ int Stack::Pop()
 	return stack[top];
 }
 
+int Stack::Count()
+{
+	return top;
+}
+
+int Stack::Capacity()
+{
+	return size;
+}
+
 void Stack::Resize(const int newSize)
 {
 	int* newStack = new int[newSize];
@@ -69,4 +79,9 @@ Stack::Stack() :stack(nullptr), top(0), size(0)
 
 Stack::Stack(const int stackSize) : stack(new int[stackSize]), top(0), size((stackSize))
 {
+}
+
+Stack::~Stack()
+{
+	delete[] stack;
 }

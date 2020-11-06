@@ -22,11 +22,11 @@ void List::PushFront(const int item)
 {
 	Node* newNode = new Node(item);
 
-	// Connect head->next to new node.
+	// Connect front->next to new node.
 	newNode->next = head->next;
 	head->next->prev = newNode;
 
-	// Connect head to new node.
+	// Connect front to new node.
 	head->next = newNode;
 	newNode->prev = head;
 
@@ -37,11 +37,11 @@ void List::PushBack(const int item)
 {
 	Node* newNode = new Node(item);
 
-	// Connect tail->prev to new node.
+	// Connect rear->prev to new node.
 	tail->prev->next = newNode;
 	newNode->prev = tail->prev;
 
-	// Connect tail to new node;
+	// Connect rear to new node;
 	newNode->next = tail;
 	tail->prev = newNode;
 
@@ -53,7 +53,7 @@ int List::PopFront()
 	Node* front = head->next;
 	int retValue = front->item;
 
-	// Connect head to front->next.
+	// Connect front to front->next.
 	head->next = front->next;
 	front->next->prev = head;
 
@@ -69,7 +69,7 @@ int List::PopBack()
 	Node* back = tail->prev;
 	int retValue = back->item;
 
-	// Connect tail to back->prev.
+	// Connect rear to back->prev.
 	back->prev->next = tail;
 	tail->prev = back->prev;
 

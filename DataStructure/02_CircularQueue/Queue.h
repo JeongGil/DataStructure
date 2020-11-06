@@ -1,22 +1,21 @@
 #pragma once
-class Stack
+class Queue
 {
-	int* stack;
-	int top;
+	int* queue;
+	int front;
+	int rear;
 	int size;
 
 public:
-	inline bool IsEmpty();
 	inline bool IsFull();
+	inline bool IsEmpty();
 	void Push(const int item);
 	int Pop();
 	inline int Count();
 	inline int Capacity();
-	void Resize(const int newSize);
 	void Print();
-
-	Stack();
-	Stack(const int stackSize);
-	~Stack();
+	
+	Queue(const int queueSize);
+	~Queue();
 };
 

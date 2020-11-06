@@ -26,4 +26,14 @@ void main()
 
 	std::cout << "Pop." << std::endl;
 	stack.Pop();
+
+	Stack stack1(3);
+	stack1.Push(5);
+	stack1.Push(5);
+	stack1.Push(5);
+	stack1.Print();
+	stack1.Resize(2);
+	stack1.Print();
+	stack1.Resize(5);
+	stack1.Print();
 }
