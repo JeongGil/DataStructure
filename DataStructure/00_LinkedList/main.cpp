@@ -23,11 +23,11 @@ void main()
 
 #if IS_LIST == 1
 	std::cout << "Remove at 4th" << std::endl;
-	list.ReMove(4);
+	list.Remove(4);
 	list.Print();
 
 	std::cout << "Remove at 2nd" << std::endl;
-	list.ReMove(2);
+	list.Remove(2);
 	list.Print();
 
 	std::cout << "Insert 9 at 3th" << std::endl;

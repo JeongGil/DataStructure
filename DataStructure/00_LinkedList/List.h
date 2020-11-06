@@ -32,7 +32,7 @@ public:
 #if IS_LIST == 1
 	inline bool IsValid(const int index);
 	void Insert(const int index, const int newValue);
-	void ReMove(const int index);
+	void Remove(const int index);
 #endif
 	inline int Size();
 	void Print();

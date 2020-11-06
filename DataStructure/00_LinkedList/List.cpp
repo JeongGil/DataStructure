@@ -115,7 +115,7 @@ void List::Insert(const int index, const int newValue)
 	size++;
 }
 
-void List::ReMove(const int index)
+void List::Remove(const int index)
 {
 	if (!IsValid((index)))
 	{
