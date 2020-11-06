@@ -1,6 +1,6 @@
 #include "List.h"
 
-List::Node::Node() :prev(nullptr), next(nullptr)
+List::Node::Node() :prev(nullptr), next(nullptr), data(0)
 {
 }
 
