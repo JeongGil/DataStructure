@@ -57,7 +57,7 @@ void Queue::Print()
 {
 	std::cout << "***" << std::endl;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < ARRAY_SIZE; i++)
 	{
 		std::cout << queue[i] << std::endl;
 	}
@@ -65,9 +65,15 @@ void Queue::Print()
 	std::cout << "***" << std::endl;
 }
 
-Queue::Queue(const int queueSize) :queue(new int(queueSize + 1)), front(0), rear(0), size(queueSize)
+Queue::Queue(const int queueSize) :queue(new int[queueSize + 1]{ 0 }), front(0), rear(0), size(queueSize)
 {
-	memset(queue, 0, sizeof(queue[0]) * (queueSize + 1));
+	//memset(queue, 0, sizeof(queue[0]) * (queueSize + 1));
+	//std::cout << "***" << std::endl;
+	/*queue = new int(queueSize);
+	for(int i=0;i< queueSize + 1;i++)
+	{
+		queue[i] = 0;
+	}*/
 }
 
 Queue::~Queue()
