@@ -45,7 +45,7 @@ int Queue::Pop()
 
 int Queue::Count()
 {
-	return ((rear - front) % ARRAY_SIZE);	// There is empty lastIndex in queue to check full.
+	return ((rear - front) % ARRAY_SIZE);	// There is empty index in queue to check full.
 }
 
 int Queue::Capacity()
