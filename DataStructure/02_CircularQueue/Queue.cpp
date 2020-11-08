@@ -45,7 +45,7 @@ int Queue::Pop()
 
 int Queue::Count()
 {
-	return ((rear - front) % ARRAY_SIZE);	// There is empty index in queue to check full.
+	return ((rear - front) % ARRAY_SIZE);	// There is empty lastIndex in queue to check full.
 }
 
 int Queue::Capacity()
@@ -67,13 +67,6 @@ void Queue::Print()
 
 Queue::Queue(const int queueSize) :queue(new int[queueSize + 1]{ 0 }), front(0), rear(0), size(queueSize)
 {
-	//memset(queue, 0, sizeof(queue[0]) * (queueSize + 1));
-	//std::cout << "***" << std::endl;
-	/*queue = new int(queueSize);
-	for(int i=0;i< queueSize + 1;i++)
-	{
-		queue[i] = 0;
-	}*/
 }
 
 Queue::~Queue()

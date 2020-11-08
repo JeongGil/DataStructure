@@ -88,9 +88,9 @@ bool List::IsValid(const int index)
 
 void List::Insert(const int index, const int item)
 {
-	if (!IsValid((index - 1)))	// It is possible to insert node at nth index even top is n - 1.
+	if (!IsValid((index - 1)))	// It is possible to insert node at nth lastIndex even top is n - 1.
 	{
-		std::cout << "Invalid index." << std::endl;
+		std::cout << "Invalid lastIndex." << std::endl;
 
 		return;
 	}
@@ -119,7 +119,7 @@ void List::Remove(const int index)
 {
 	if (!IsValid((index)))
 	{
-		std::cout << "Invalid index." << std::endl;
+		std::cout << "Invalid lastIndex." << std::endl;
 
 		return;
 	}
