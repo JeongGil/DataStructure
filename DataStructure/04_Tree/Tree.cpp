@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -83,7 +84,7 @@ Node* Tree::Search_NonRecursive(Node* root, Item item)
 Node* Tree::Min(Node* root)
 {
 	Node* curNode = root;
-	while (curNode->GetLeftChild())
+	while (curNode && curNode->GetLeftChild())
 	{
 		curNode = curNode->GetLeftChild();
 	}
@@ -94,7 +95,7 @@ Node* Tree::Min(Node* root)
 Node* Tree::Max(Node* root)
 {
 	Node* curNode = root;
-	while (curNode->GetRightChild())
+	while (curNode && curNode->GetRightChild())
 	{
 		curNode = curNode->GetRightChild();
 	}
@@ -104,6 +105,11 @@ Node* Tree::Max(Node* root)
 
 Node* Tree::Successor(Node* node)
 {
+	if (!node)
+	{
+		return nullptr;
+	}
+
 	if (node->GetRightChild())
 	{
 		return Min(node->GetRightChild());
@@ -122,6 +128,11 @@ Node* Tree::Successor(Node* node)
 
 Node* Tree::Predecessor(Node* node)
 {
+	if (!node)
+	{
+		return nullptr;
+	}
+
 	if (node->GetLeftChild())
 	{
 		return Max(node->GetLeftChild());
@@ -138,14 +149,19 @@ Node* Tree::Predecessor(Node* node)
 	return curParent;
 }
 
-Node* Tree::Insert(Tree* tree, Item item)
+void Tree::Insert(Tree* tree, Item item)
 {
 	Node* newNode = new Node(item);
 	Insert(tree, newNode);
 }
 
-Node* Tree::Insert(Tree* tree, Node* newNode)
+void Tree::Insert(Tree* tree, Node* newNode)
 {
+	if (!tree || !newNode)
+	{
+		return;
+	}
+
 	Node* curParent(nullptr);
 	Node* curNode = tree->GetRoot();
 	while (curNode)	// Find insert position
@@ -173,6 +189,186 @@ Node* Tree::Insert(Tree* tree, Node* newNode)
 	else
 	{
 		curParent->SetRightChild(curNode);
+	}
+}
+
+void Tree::TransPlant(Tree* tree, Node* origin, Node* post)
+{
+	if (!tree || !origin)
+	{
+		return;
+	}
+
+	if (!origin->GetParent())	// origin node is root node
+	{
+		tree->SetRoot(post);
+	}
+	else if (origin == origin->GetParent()->GetLeftChild())	// origin node is left child
+	{
+		origin->GetParent()->SetLeftChild(post);
+	}
+	else	// right child
+	{
+		origin->GetParent()->SetRightChild(post);
+	}
+
+	if (post)
+	{
+		post->SetParent(origin->GetParent());
+	}
+}
+
+void Tree::Delete(Tree* tree, Node* delNode)
+{
+	if (!tree || !delNode)
+	{
+		return;
+	}
+
+	if (!delNode->GetLeftChild())
+	{
+		TransPlant(tree, delNode, delNode->GetRightChild());
+	}
+	else if (!delNode->GetRightChild())
+	{
+		TransPlant(tree, delNode, delNode->GetLeftChild());
+	}
+	else
+	{
+		Node* temp = Min(delNode->GetRightChild());
+		if (temp->GetParent() != delNode)
+		{
+			TransPlant(tree, temp, temp->GetRightChild());
+
+			temp->SetRightChild(delNode->GetRightChild());
+			temp->GetRightChild()->SetParent(temp);
+		}
+
+		TransPlant(tree, delNode, temp);
+		temp->SetLeftChild(delNode->GetLeftChild());
+		temp->GetLeftChild()->SetParent(temp);
+	}
+
+	delete delNode;
+}
+
+int Tree::GetHeight(Node* node)
+{
+	if (!node)
+	{
+		return 0;
+	}
+
+	return max(GetHeight(node->GetLeftChild()), GetHeight(node->GetRightChild())) + 1;
+}
+
+int Tree::GetBalanceFactor(Node* node)
+{
+	if (!node)
+	{
+		return 0;
+	}
+
+	return GetHeight(node->GetLeftChild()) - GetHeight(node->GetRightChild());
+}
+
+void Tree::RotateLL(Node* node)
+{
+	if (node)
+	{
+		if (node->GetLeftChild())
+		{
+			Node* temp = node->GetLeftChild()->GetRightChild();
+			node->GetLeftChild()->SetRightChild(node);
+			node->SetParent(node->GetLeftChild());
+
+			if (temp)
+			{
+				node->SetLeftChild(temp);
+			}
+			else
+			{
+				node->SetLeftChild(nullptr);
+			}
+		}
+	}
+}
+
+void Tree::RotateRR(Node* node)
+{
+	if (node)
+	{
+		if (node->GetRightChild())
+		{
+			Node* temp = node->GetRightChild()->GetLeftChild();
+			node->GetRightChild()->SetLeftChild(node);
+			node->SetParent(node->GetRightChild());
+
+			if (temp)
+			{
+				node->SetRightChild(temp);
+			}
+			else
+			{
+				node->SetRightChild(nullptr);
+			}
+		}
+	}
+}
+
+void Tree::RotateLR(Node* node)
+{
+	if (node)
+	{
+		if (node->GetLeftChild())
+		{
+			RotateRR(node->GetLeftChild());
+			RotateLL(node);
+		}
+	}
+}
+
+void Tree::RotateRL(Node* node)
+{
+	if (node)
+	{
+		if (node->GetRightChild())
+		{
+			RotateLL(node->GetLeftChild());
+			RotateRR(node);
+		}
+	}
+}
+
+void Tree::Rebalance(Node* node)
+{
+	if (node)
+	{
+		int balanceFactor = GetBalanceFactor(node);
+
+		if (balanceFactor > balanceThreshold)
+		{
+			if (GetBalanceFactor(node->GetLeftChild()) > 0)
+			{
+				RotateLL(node);
+			}
+			else
+			{
+				RotateLR(node);
+			}
+		}
+
+		if (balanceFactor < -balanceThreshold)
+		{
+			if (GetBalanceFactor(node->GetLeftChild()) < 0)
+			{
+				RotateRR(node);
+			}
+			else
+			{
+				RotateRL(node);
+			}
+		}
 	}
 }
 

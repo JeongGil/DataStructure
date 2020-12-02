@@ -2,6 +2,7 @@
 #include <sal.h>
 
 using Item = int;
+const int balanceThreshold(1);	// at least 1
 
 class Node
 {
@@ -54,7 +55,22 @@ public:
 	static Node* Predecessor(_In_ Node* node);
 	
 	// Insert, Remove
-	static Node* Insert(Tree* tree, Item item);
-	static Node* Insert(Tree* tree, Node* newNode);
+	static void Insert(Tree* tree, Item item);
+	static void Insert(Tree* tree, Node* newNode);
+
+	// Change node origin to post
+	static void TransPlant(Tree* tree, Node* origin, Node* post);
+
+	static void Delete(Tree* tree, Node* delNode);
+
+	// re-balance
+	static int GetHeight(_In_ Node* node);
+	static int GetBalanceFactor(_In_ Node* node);	// if return value is +, left high
+	static void RotateLL(Node* node);
+	static void RotateRR(Node* node);
+	static void RotateLR(Node* node);
+	static void RotateRL(Node* node);
+	static void Rebalance(Node* node);
+	
 	Tree();
 };
