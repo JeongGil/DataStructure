@@ -282,14 +282,7 @@ void Tree::RotateLL(Node* node)
 			node->GetLeftChild()->SetRightChild(node);
 			node->SetParent(node->GetLeftChild());
 
-			if (temp)
-			{
-				node->SetLeftChild(temp);
-			}
-			else
-			{
-				node->SetLeftChild(nullptr);
-			}
+			node->SetLeftChild(temp);			
 		}
 	}
 }
@@ -304,14 +297,7 @@ void Tree::RotateRR(Node* node)
 			node->GetRightChild()->SetLeftChild(node);
 			node->SetParent(node->GetRightChild());
 
-			if (temp)
-			{
-				node->SetRightChild(temp);
-			}
-			else
-			{
-				node->SetRightChild(nullptr);
-			}
+			node->SetRightChild(temp);
 		}
 	}
 }
